@@ -1,0 +1,16 @@
+.drop_down{
+    width: 239px;
+    max-height: 200px;
+    overflow: auto;
+    border: 1px solid #8c735338;
+    li{
+        height: 40px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 12px;
+        &:hover{
+         background-color: #8c735338;
+        }
+    }
+}
