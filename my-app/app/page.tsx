@@ -1,20 +1,22 @@
+"use client";
 import BoxLine from "./component/boxLine/BoxLine";
-import Text from "@/public/locales/en.json";
+import { useTranslation } from "./component/languageProvider/LanguageProvider";
 import Menu from "./component/menu/Menu";
 
 export default function Home() {
+    const t = useTranslation();
   return (
     <div>
       <BoxLine
         className={`flex justify-center items-center h-[32px] text-white-normal bg-brown-normal text-[16px]`}
       >
-        {Text.TEXT_ABOVE}
+        {`${t("TEXT_ABOVE")}`}
       </BoxLine>
       <Menu />
       <BoxLine
         className={`flex justify-center items-center bg-white-normal text-brown-normal h-[41px] text-[14px]`}
       >
-        {Text.TEXT_UNDER}
+        {`${t("TEXT_UNDER")}`}
       </BoxLine>
     </div>
   );

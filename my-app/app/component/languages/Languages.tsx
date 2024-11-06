@@ -18,25 +18,19 @@ const Languages = () => {
   );
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Set the initial selected language from localStorage if available
   const initialLanguage =
     typeof window !== "undefined"
       ? localStorage.getItem("selectedLanguage")
       : null;
 
-  // Effect to load languages
   useEffect(() => {
     const loadLanguages = async () => {
       try {
         const data = await fetchLanguages();
         setLanguages(data);
-
-        // If there is a language stored in localStorage, dispatch it
         if (initialLanguage) {
           dispatch(setLanguage(initialLanguage));
         } else if (!selectedLanguageFromStore) {
-          // If no language is stored, set the first language as default (if any)
           if (data.length > 0) {
             dispatch(setLanguage(data[0].lang));
             localStorage.setItem("selectedLanguage", data[0].lang);
@@ -56,7 +50,7 @@ const Languages = () => {
 
   const handleLanguageChange = async (language: string) => {
     dispatch(setLanguage(language));
-    localStorage.setItem("selectedLanguage", language); // Store the selected language in localStorage
+    localStorage.setItem("selectedLanguage", language); 
     setIsOpen(false);
 
     try {

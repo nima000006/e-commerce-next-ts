@@ -1,11 +1,15 @@
-.items {
-  .hover_line {
-    transform: scaleX(0);
-    transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  &:hover {
+.container {
+  box-shadow: 0 10px 20px #0000, 0 5px 10px #00000005;
+  border-bottom: 1px solid #8c735338;
+  .items {
     .hover_line {
-      transform: scaleX(1);
+      transform: scaleX(0);
+      transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    &:hover {
+      .hover_line {
+        transform: scaleX(1);
+      }
     }
   }
 }

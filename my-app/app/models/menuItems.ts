@@ -1,19 +1,15 @@
-import Text from "@/public/locales/en.json";
-
-export type MenuItem = {
-  id: number;
-  label: string;
-  href: string;
+"use client";
+import { useTranslation } from "../component/languageProvider/LanguageProvider";
+export const MenuItems = () => {
+  const t = useTranslation();
+  return [
+    { id: 1, label: t("MENU.PERFUME"), href: "/perfume" },
+    { id: 2, label: t("MENU.CANDLES"), href: "/candles" },
+    { id: 3, label: t("MENU.HOME"), href: "/home" },
+    { id: 4, label: t("MENU.HANDS"), href: "/hands" },
+    { id: 5, label: t("MENU.PANTRY"), href: "/pantry" },
+    { id: 6, label: t("MENU.COLLECTIONS"), href: "/collections" },
+    { id: 7, label: t("MENU.GIFTS"), href: "/gifts" },
+  ];
 };
 
-const MenuItems: MenuItem[] = [
-  { id: 1, label: Text.MENU.PERFUME, href: "/perfume" },
-  { id: 2, label: Text.MENU.CANDLES, href: "/candles" },
-  { id: 3, label: Text.MENU.HOME, href: "/home" },
-  { id: 4, label: Text.MENU.HANDS, href: "/hands" },
-  { id: 5, label: Text.MENU.PANTRY, href: "/pantry" },
-  { id: 6, label: Text.MENU.COLLECTIONS, href: "/collections" },
-  { id: 7, label: Text.MENU.GIFTS, href: "/gifts" },
-];
-
-export default MenuItems;
