@@ -11,6 +11,7 @@ const Languages = () => {
   const selectedLanguageFromStore = useSelector(
     (state: RootState) => state.language.selectedLanguage
   );
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [languages, setLanguages] = useState<{ id: string; lang: string }[]>(
@@ -50,7 +51,7 @@ const Languages = () => {
 
   const handleLanguageChange = async (language: string) => {
     dispatch(setLanguage(language));
-    localStorage.setItem("selectedLanguage", language); 
+    localStorage.setItem("selectedLanguage", language);
     setIsOpen(false);
 
     try {
@@ -83,11 +84,13 @@ const Languages = () => {
   return (
     <div className="relative text-brown-normal px-[12px]" ref={dropdownRef}>
       <div className="text-brown-normal cursor-pointer" onClick={handleToggle}>
-          {selectedLanguageFromStore || "Select Language"}
+        {selectedLanguageFromStore || "Select Language"}
       </div>
       {isOpen && (
         <ul
-          className={`absolute top-full ${Style.drop_down} bg-white-normal right-[-5px]`}
+          className={`absolute top-full ${Style.drop_down} bg-white-normal 
+            ${selectedLanguageFromStore == "En" ? "right-0" : "left-0"}
+          `}
         >
           <SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           {filteredLanguages.map((item) => (

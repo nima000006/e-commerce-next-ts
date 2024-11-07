@@ -2,6 +2,7 @@
   "TEXT_ABOVE": "Free Delivery in Europe (EEC) Over €80",
   "TEXT_UNDER": "Translated languages rely on a mix of human and machine translations.",
   "SEARCH_PLACEHOLDER": "Type to search...",
+  "CLEAR": "CLEAR",
   "MENU": {
     "PERFUME": "Perfume",
     "CANDLES": "Candles",
@@ -10,5 +11,12 @@
     "PANTRY": "Pantry",
     "COLLECTIONS": "Collections",
     "GIFTS": "Gifts"
+  },
+  "FOOTER": {
+    "SIGN_UP": "Sign Up for Updates",
+    "PLACEHOLDER_EMAIL": "Enter your email address"
+  },
+  "ERROR": {
+    "MANDATORY": "This field is required"
   }
 }

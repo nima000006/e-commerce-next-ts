@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 interface Props {
-  onClick: () => void;
+  onClick?: () => void;
 }
 const SearchIcon: FC<Props> = ({ onClick }) => {
   return (
