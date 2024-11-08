@@ -11,95 +11,27 @@
   ],
   "selected": [
     {
-      "id": "f338",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "e2f5",
+      "id": "2d02",
       "selectedLanguage": "Fa"
     },
     {
-      "id": "5ab3",
+      "id": "3df0",
       "selectedLanguage": "En"
     },
     {
-      "id": "3f21",
+      "id": "1d84",
       "selectedLanguage": "Fa"
     },
     {
-      "id": "aa58",
+      "id": "82ad",
       "selectedLanguage": "En"
     },
     {
-      "id": "bd42",
+      "id": "7e59",
       "selectedLanguage": "Fa"
     },
     {
-      "id": "1c52",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "d59d",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "0a5b",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "c4ee",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "2f03",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "91c4",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "3bdc",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "3559",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "2271",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "aae3",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "1282",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "3735",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "c811",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "0929",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "0430",
-      "selectedLanguage": "En"
-    },
-    {
-      "id": "cadd",
-      "selectedLanguage": "Fa"
-    },
-    {
-      "id": "537c",
+      "id": "ec31",
       "selectedLanguage": "En"
     }
   ]

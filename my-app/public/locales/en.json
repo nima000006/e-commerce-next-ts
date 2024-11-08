@@ -14,9 +14,29 @@
   },
   "FOOTER": {
     "SIGN_UP": "Sign Up for Updates",
-    "PLACEHOLDER_EMAIL": "Enter your email address"
+    "PLACEHOLDER_EMAIL": "Enter your email address",
+    "SELECT_LANG": "Preferred Language",
+    "SUBSCRIBE": "Subscribe",
+    "ABOUTUS": "About Us",
+    "DESCRIBE": "loremIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here'"
   },
   "ERROR": {
     "MANDATORY": "This field is required"
+  },
+  "MENU_ITEMS_1": {
+    "ABOUT": "About Lyn Harris",
+    "STORES": "Stores",
+    "CONTACT": "Contact",
+    "DELIVERY": "Delivery",
+    "STOCKISTS": "Stockists",
+    "REFILL": "Refill Service",
+    "CAREERS": "Careers"
+  },
+  "MENU_ITEMS_2": {
+    "PERFUME": "Perfume",
+    "BODY": "Body",
+    "ACCESSORIES": "Accessories",
+    "PANTRY": "Pantry",
+    "PRODUCTS": "All Products"
   }
 }
