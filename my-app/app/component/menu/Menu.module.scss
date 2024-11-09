@@ -5,6 +5,8 @@
     .hover_line {
       transform: scaleX(0);
       transition: transform 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+      position: absolute;
+      top: 60px;
     }
     &:hover {
       .hover_line {
@@ -12,4 +14,8 @@
       }
     }
   }
+  .mega_menu{
+    height: 302px;
+    border-top: 1px solid #f2efef;
+  } 
 }
