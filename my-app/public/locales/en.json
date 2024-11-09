@@ -3,6 +3,8 @@
   "TEXT_UNDER": "Translated languages rely on a mix of human and machine translations.",
   "SEARCH_PLACEHOLDER": "Type to search...",
   "CLEAR": "CLEAR",
+  "CART": "Cart",
+  "CART_EMPTY": "Your Cart is Empty",
   "MENU": {
     "PERFUME": "Perfume",
     "CANDLES": "Candles",

@@ -6,6 +6,7 @@ import Style from "./Menu.module.scss";
 import Languages from "../languages/Languages";
 import Search from "../search/Search";
 import { TranslationData } from "../languageProvider/LanguageProvider";
+import MiniCart from "../miniCart/MiniCart";
 
 const Menu = () => {
   const menuItems = MenuItems();
@@ -47,7 +48,7 @@ const Menu = () => {
       <ul className="flex items-center justify-center h-[100%]">
         {menuItems.map((item: TranslationData) => (
           <li
-            className={`px-[15px] relative text-brown-normal ${Style.items} h-[100%] flex flex-col justify-center`}
+            className={`px-[15px] relative text-brown-normal font-thin ${Style.items} h-[100%] flex flex-col justify-center`}
             key={item.id}
             onMouseEnter={() => handleMenuItemMouseEnter(item)}
             onMouseLeave={handleMenuItemMouseLeave}
@@ -62,6 +63,7 @@ const Menu = () => {
       <div className="flex items-center">
         <Languages />
         <Search />
+        <MiniCart menuItems={menuItems} />
       </div>
       {hoveredItem && (
         <div
@@ -75,13 +77,13 @@ const Menu = () => {
               {hoveredItem.columns.map(
                 (column: TranslationData, columnIndex: number) => (
                   <ul key={columnIndex} className="px-[60px]">
-                    <li className="text-brown-normal underline mb-2">
+                    <li className="text-brown-normal underline mb-2 font-light">
                       <Link href={column.href}>{column.title}</Link>
                     </li>
                     {column.items.map(
                       (item: TranslationData, itemIndex: number) => (
                         <li
-                          className="text-brown-normal text-[14px] mb-2"
+                          className="text-brown-normal text-[14px] mb-2 font-thin"
                           key={itemIndex}
                         >
                           <Link href={item.href}>{item.label}</Link>

@@ -83,12 +83,12 @@ const Languages = () => {
 
   return (
     <div className="relative text-brown-normal px-[12px]" ref={dropdownRef}>
-      <div className="text-brown-normal cursor-pointer" onClick={handleToggle}>
+      <div className="text-brown-normal font-thin cursor-pointer" onClick={handleToggle}>
         {selectedLanguageFromStore || "Select Language"}
       </div>
       {isOpen && (
         <ul
-          className={`absolute top-full ${Style.drop_down} bg-white-normal 
+          className={`absolute top-full font-thin ${Style.drop_down} bg-white-normal 
             ${selectedLanguageFromStore == "En" ? "right-0" : "left-0"}
           `}
         >
