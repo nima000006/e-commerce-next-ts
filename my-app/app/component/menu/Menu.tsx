@@ -68,7 +68,7 @@ const Menu = () => {
       {hoveredItem && (
         <div
           ref={megaMenuRef} // Attach the ref to the mega menu
-          className={`left-0 z-10 backdrop-blur-[10px] max-w-[100vw] w-full absolute top-[100%] ${Style.mega_menu}`}
+          className={`left-0 z-20 backdrop-blur-[10px] max-w-[100vw] w-full absolute top-[100%] ${Style.mega_menu}`}
           onMouseEnter={handleMegaMenuMouseEnter}
           onMouseLeave={handleMegaMenuMouseLeave}
         >

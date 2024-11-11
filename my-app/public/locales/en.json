@@ -5,6 +5,11 @@
   "CLEAR": "CLEAR",
   "CART": "Cart",
   "CART_EMPTY": "Your Cart is Empty",
+  "DISCOVER": {
+    "HEAD": "Sample",
+    "DESC": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
+    "MORE": "Discover more"
+  },
   "MENU": {
     "PERFUME": "Perfume",
     "CANDLES": "Candles",

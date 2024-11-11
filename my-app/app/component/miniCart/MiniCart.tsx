@@ -24,6 +24,10 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
     (state: RootState) => state.language.selectedLanguage
   );
 
+  // Set the initial position based on language without transition effect
+  const cartPositionClass =
+    selectedLanguage === "Fa" ? "-translate-x-full" : "translate-x-full";
+
   return (
     <div className="px-[12px]">
       <button onClick={toggleCart}>
@@ -42,12 +46,10 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
       <div
         className={`fixed top-0 ${
           selectedLanguage === "Fa" ? "left-0" : "right-0"
-        } w-[300px] h-full bg-white-normal border border-r-brown-normal shadow-lg transition-transform duration-500 ease-in-out z-20 ${
+        } w-[300px] h-full bg-white-normal border border-r-brown-normal shadow-lg z-20 ${
           isOpen
-            ? "transform translate-x-0"
-            : selectedLanguage === "Fa"
-            ? "transform -translate-x-full"
-            : "transform translate-x-full"
+            ? "transform translate-x-0 transition-transform duration-500 ease-in-out"
+            : cartPositionClass
         }`}
       >
         <div className="h-full">

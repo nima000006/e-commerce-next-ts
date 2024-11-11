@@ -1,7 +1,9 @@
+import DiscoverSection from "./component/sections/discoverSection/DiscoverSection";
+
 export default function Home() {
   return (
     <div>
-      home
+      <DiscoverSection />
     </div>
   );
 }

@@ -14,6 +14,7 @@ const config: Config = {
         },
         white: {
           normal: "#fafafa",
+          100:"rgba(250,250,250,.8)" 
         },
         gray: {
           light: "#e9e9eb",

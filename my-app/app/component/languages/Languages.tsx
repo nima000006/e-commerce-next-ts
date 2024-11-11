@@ -88,7 +88,7 @@ const Languages = () => {
       </div>
       {isOpen && (
         <ul
-          className={`absolute top-full font-thin ${Style.drop_down} bg-white-normal 
+          className={`absolute z-30 top-full font-thin ${Style.drop_down} bg-white-normal 
             ${selectedLanguageFromStore == "En" ? "right-0" : "left-0"}
           `}
         >
