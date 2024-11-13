@@ -1,0 +1,76 @@
+.button_arrow {
+  box-shadow: 0 2px 6px #0000000a, 0 2px 2px #00000005;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color: white;
+  transition: 0.3s opacity ease-in-out, 0.3s transform ease-in-out; /* Transition opacity and transform for sliding effect */
+  z-index: 10;
+
+  &:hover {
+    background-color: rgb(193, 193, 193);
+  }
+}
+
+.prev {
+  left: 50px;
+  transition: 0.5s linear all;
+}
+
+.next {
+  right: 50px;
+  transition: 0.5s linear all;
+}
+
+/* For the disabled state with sliding fade-out */
+.prev.disabled,
+.prev {
+  opacity: 0;
+  transform: translateX(-100%); /* Slide to the left */
+  pointer-events: none; /* Disable pointer events */
+}
+
+.next.disabled,
+.next {
+  opacity: 0;
+  transform: translateX(100%); /* Slide to the right */
+  pointer-events: none; /* Disable pointer events */
+}
+
+/* For the active state with sliding fade-in */
+.container {
+  &:hover {
+    .prev:not(.disabled) {
+      opacity: 1;
+      transform: translateX(0); /* Reset to original position */
+      pointer-events: auto; /* Enable pointer events */
+    }
+  }
+}
+
+.container {
+  &:hover {
+    .next:not(.disabled) {
+      opacity: 1;
+      transform: translateX(0); /* Reset to original position */
+      pointer-events: auto; /* Enable pointer events */
+    }
+  }
+}
+.swiper_slide_image {
+  position: relative;
+  overflow: hidden;
+  .quick_add {
+    position: absolute;
+    transition: 0.3s all linear;
+    left: 0;
+    bottom: -100px;
+    height: 30px;
+  }
+  &:hover {
+    .quick_add {
+      bottom: 0;
+    }
+  }
+}

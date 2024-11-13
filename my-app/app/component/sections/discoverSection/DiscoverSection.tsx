@@ -27,13 +27,13 @@ const DiscoverSection = () => {
             <p className="text-center text-[12px] text-white-normal  mt-2">{`${t(
               "DISCOVER.DESC"
             )}`}</p>
-            <div className="flex justify-between mt-10">
-              <button className="w-[121px] h-[40px] flex justify-center items-center text-[12px] font-thin bg-white-normal cursor-pointer">
+            <div className="flex justify-center mt-10">
+              <button className="w-[121px] mx-2 h-[40px] flex justify-center items-center text-[12px] font-thin bg-white-normal cursor-pointer">
                 <Link href={"/more"}>{`${t("DISCOVER.MORE")}`}</Link>
               </button>
               <button
                 onClick={OpenPopUp}
-                className="w-[40px] h-[40px] flex justify-center items-center text-[12px] font-thin bg-white-normal cursor-pointer"
+                className="w-[40px] mx-2 h-[40px] flex justify-center items-center text-[12px] font-thin bg-white-normal cursor-pointer"
               >
                 <PlayIcon />
               </button>

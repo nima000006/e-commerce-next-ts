@@ -5,7 +5,6 @@ import { useTranslation } from "../languageProvider/LanguageProvider";
 
 const MenuFooter: React.FC<MenuFooterModel> = ({ items }) => {
     const t = useTranslation();
-    console.log(t("MENU_ITEMS_1.ABOUT"));
     
   return (
     <div className="flex justify-around">
