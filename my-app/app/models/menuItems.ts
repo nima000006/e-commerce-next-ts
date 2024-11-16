@@ -93,41 +93,41 @@ export const MenuItems = () => {
     {
       id: 3,
       label: t("MENU.HOME"),
-      href: "/home",
+      href: "/",
       columns: [
         {
           title: t("SUBMENU.DECOR"),
           href: "/decor",
           items: [
-            { label: t("SUBMENU.WALL_ART"), href: "/home/decor/wall-art" },
-            { label: t("SUBMENU.PILLOWS"), href: "/home/decor/pillows" },
-            { label: t("SUBMENU.BLANKETS"), href: "/home/decor/blankets" },
+            { label: t("SUBMENU.WALL_ART"), href: "/decor/wall-art" },
+            { label: t("SUBMENU.PILLOWS"), href: "/decor/pillows" },
+            { label: t("SUBMENU.BLANKETS"), href: "/decor/blankets" },
           ],
         },
         {
           title: t("SUBMENU.FURNITURE"),
           href: "/furniture",
           items: [
-            { label: t("SUBMENU.CHAIRS"), href: "/home/furniture/chairs" },
-            { label: t("SUBMENU.TABLES"), href: "/home/furniture/tables" },
+            { label: t("SUBMENU.CHAIRS"), href: "/furniture/chairs" },
+            { label: t("SUBMENU.TABLES"), href: "/furniture/tables" },
           ],
         },
         {
           title: t("SUBMENU.KITCHEN"),
           href: "/kitchen",
           items: [
-            { label: t("SUBMENU.COOKWARE"), href: "/home/kitchen/cookware" },
-            { label: t("SUBMENU.UTENSILS"), href: "/home/kitchen/utensils" },
+            { label: t("SUBMENU.COOKWARE"), href: "/kitchen/cookware" },
+            { label: t("SUBMENU.UTENSILS"), href: "/kitchen/utensils" },
           ],
         },
         {
           title: t("SUBMENU.BATH"),
           href: "/bath",
           items: [
-            { label: t("SUBMENU.TOWELS"), href: "/home/bath/towels" },
+            { label: t("SUBMENU.TOWELS"), href: "/bath/towels" },
             {
               label: t("SUBMENU.SHOWER_CURTAINS"),
-              href: "/home/bath/shower-curtains",
+              href: "/bath/shower-curtains",
             },
           ],
         },

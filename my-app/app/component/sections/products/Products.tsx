@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,9 +11,12 @@ import "swiper/css/scrollbar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { fetchProducts } from "@/app/redux/productSlice";
+import { addToCart } from "@/app/redux/addToCartSlice"; // Import the action
 import Style from "./Products.module.scss";
-import Skeleton from "react-loading-skeleton"; // Import the skeleton loader
+import Skeleton from "react-loading-skeleton";
 import { useTranslation } from "../../languageProvider/LanguageProvider";
+import { Product } from "@/app/models/productsModel";
+import { fetchCartList } from "@/app/redux/fetchCartSlice";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,15 +25,16 @@ const Products = () => {
   const error = useSelector((state: RootState) => state.products.error);
   const selectedLanguage = useSelector(
     (state: RootState) => state.language.selectedLanguage
-  ); // Assuming you store the direction in Redux
+  );
 
   const swiperRef = useRef<any>();
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
-  const [swiperInstance, setSwiperInstance] = useState<any>(null); // To store the swiper instance
-  const [isFirstSlide, setIsFirstSlide] = useState<boolean>(false); // To track if it's the first slide
-  const [isLastSlide, setIsLastSlide] = useState<boolean>(false); // To track if it's the last slide
+  const [swiperInstance, setSwiperInstance] = useState<any>(null);
+  const [isFirstSlide, setIsFirstSlide] = useState<boolean>(false);
+  const [isLastSlide, setIsLastSlide] = useState<boolean>(false);
 
   const t = useTranslation();
+
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchProducts());
@@ -39,19 +43,18 @@ const Products = () => {
 
   useEffect(() => {
     if (swiperInstance) {
-      swiperInstance.update(); // Ensure Swiper recalculates layout on language change
+      swiperInstance.update();
     }
   }, [selectedLanguage, swiperInstance]);
 
   useEffect(() => {
-    // Set initial state on first render
     if (swiperInstance) {
-      handleSlideChange(); // Ensure correct initial disabled state
+      handleSlideChange();
     }
   }, [swiperInstance]);
 
   const handleImageError = (id: string) => {
-    setImageError((prevState: { [key: string]: boolean }) => ({
+    setImageError((prevState) => ({
       ...prevState,
       [id]: true,
     }));
@@ -59,14 +62,23 @@ const Products = () => {
 
   const handleSlideChange = () => {
     if (swiperInstance) {
-      const isFirst = swiperInstance.isBeginning; // Check if it's the first slide
-      const isLast = swiperInstance.isEnd; // Check if it's the last slide
-      setIsFirstSlide(isFirst);
-      setIsLastSlide(isLast);
+      setIsFirstSlide(swiperInstance.isBeginning);
+      setIsLastSlide(swiperInstance.isEnd);
     }
   };
 
-  // Custom navigation buttons for RTL/LTR
+  const handleAddToCart = (product: Product) => {
+    dispatch(fetchCartList());
+    dispatch(addToCart(product))
+      .unwrap()
+      .then((result) => {
+        console.log("Product added to cart:", result);
+      })
+      .catch((error) => {
+        console.error("Failed to add product to cart:", error);
+      });
+  };
+
   const renderNavigationButtons = () => {
     const nextButtonDisabled = isLastSlide ? `${Style.disabled}` : "";
     const prevButtonDisabled = isFirstSlide ? `${Style.disabled}` : "";
@@ -130,7 +142,6 @@ const Products = () => {
     <div className={`p-[50px] relative ${Style.container}`}>
       {status === "loading" && (
         <div className="grid grid-cols-5 gap-4">
-          {/* Skeleton Loader for Products */}
           {Array(5)
             .fill(0)
             .map((_, index) => (
@@ -147,19 +158,18 @@ const Products = () => {
       {status === "succeeded" && (
         <div>
           <Swiper
-            key={selectedLanguage} // This forces re-render when language changes
-            dir={selectedLanguage === "Fa" ? "rtl" : "ltr"} // Set the direction based on language
+            key={selectedLanguage}
+            dir={selectedLanguage === "Fa" ? "rtl" : "ltr"}
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             onBeforeInit={(swiper) => {
               swiperRef.current = swiper;
-              setSwiperInstance(swiper); // Save swiper instance
+              setSwiperInstance(swiper);
             }}
             spaceBetween={50}
             slidesPerView={5}
-            navigation={false} // Disable default navigation
+            navigation={false}
             pagination={false}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={handleSlideChange} // Update slide status on change
+            onSlideChange={handleSlideChange}
           >
             {products.map((item) => (
               <SwiperSlide key={item.id}>
@@ -177,15 +187,15 @@ const Products = () => {
                       width={200}
                       height={200}
                       loading="lazy"
-                      onError={() => handleImageError(`${item.id}`)} // Trigger error handler
+                      onError={() => handleImageError(`${item.id}`)}
                     />
                     <div
                       className={`flex font-semibold text-brown-normal w-full items-center justify-center backdrop-blur-[10px] ${Style.quick_add}`}
+                      onClick={() => handleAddToCart(item)} // Pass the product to the handler
                     >
                       {`${t("QUICKADD")}`}
                     </div>
                   </div>
-
                   <h3 className="text-center mt-5 font-semibold text-brown-normal">
                     {item.brand}
                   </h3>
@@ -204,8 +214,6 @@ const Products = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-
-          {/* Custom Navigation Buttons based on Direction */}
           <div className="absolute top-1/2 left-0 right-0 z-10 flex justify-between">
             {renderNavigationButtons()}
           </div>

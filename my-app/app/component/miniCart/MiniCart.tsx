@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import BagIcon from "../bagIcon/BagIcon";
 import {
   TranslationData,
@@ -7,8 +7,9 @@ import {
 import CloseIcon from "../closeIcon/CloseIcon";
 import Link from "next/link";
 import Style from "./MiniCart.module.scss";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/languageSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartList } from "@/app/redux/fetchCartSlice";
+import { AppDispatch, RootState } from "@/app/redux/store";
 
 interface Props {
   menuItems: TranslationData;
@@ -19,6 +20,17 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
   const toggleCart = () => setIsOpen(!isOpen);
   const closeCart = () => setIsOpen(false);
   const t = useTranslation();
+  // Access cart items from Redux store
+  const cartItems = useSelector((state: RootState) => state.fetchCart.items);
+  // const cartStatus = useSelector((state: RootState) => state.fetchCart.status);
+  // const cartError = useSelector((state: RootState) => state.fetchCart.error);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  // Fetch cart items when the component mounts
+  useEffect(() => {
+    dispatch(fetchCartList()); // Dispatch fetchCartList to load cart items
+  }, [cartItems, dispatch]);
 
   const selectedLanguage = useSelector(
     (state: RootState) => state.language.selectedLanguage
@@ -30,8 +42,13 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
 
   return (
     <div className="px-[12px]">
-      <button onClick={toggleCart}>
+      <button className="relative" onClick={toggleCart}>
         <BagIcon />
+        {cartItems.length > 0 && (
+          <span className="absolute top-[-5px] w-[16px] h-[16px] rounded-full flex items-center justify-center right-[-5px] text-[10px] text-white-normal bg-brown-normal">
+            {cartItems.length > 9 ? "9+" : cartItems.length}
+          </span>
+        )}
       </button>
 
       {/* Overlay */}
@@ -55,7 +72,7 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
         <div className="h-full">
           <div className="border border-b-[#8c735338] p-[15px] flex justify-between">
             <span className="text-brown-normal font-thin text-[14px]">
-              {`${t("CART")}`} (0)
+              {`${t("CART")}`} ({cartItems.length})
             </span>
             <CloseIcon onClick={closeCart} />
           </div>
