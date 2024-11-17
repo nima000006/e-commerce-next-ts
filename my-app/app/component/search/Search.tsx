@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import SearchIcon from "../searchIcon/SearchIcon";
 import Style from "./Search.module.scss";
 import CloseIcon from "../closeIcon/CloseIcon";
@@ -10,6 +10,21 @@ const Search = () => {
   const [showClear, setShowClear] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const t = useTranslation();
+   const [isSticky, setIsSticky] = useState(false);
+   useEffect(() => {
+     const handleScroll = () => {
+       if (window.scrollY > 100) {
+         setIsSticky(true);
+       } else {
+         setIsSticky(false);
+       }
+     };
+
+     window.addEventListener("scroll", handleScroll);
+     return () => {
+       window.removeEventListener("scroll", handleScroll);
+     };
+   }, []);
 
   const OpenPopup = () => {
     setSearchPopup(true);
@@ -35,7 +50,9 @@ const Search = () => {
       <SearchIcon onClick={OpenPopup} />
 
       <div
-        className={`${Style.popupOverlay} ${searchPopup ? Style.active : ""}`}
+        className={`${Style.popupOverlay} ${
+          searchPopup ? Style.active : ""
+        } ${isSticky ? Style.top_zero: ""}`}
         onClick={ClosePopup}
       >
         <div
@@ -54,9 +71,10 @@ const Search = () => {
                   onChange={onChangeHandler}
                 />
                 {showClear && (
-                  <span className="cursor-pointer text-brown-normal font-thin" onClick={clearInput}>{`${t(
-                    "CLEAR"
-                  )}`}</span>
+                  <span
+                    className="cursor-pointer text-brown-normal font-thin"
+                    onClick={clearInput}
+                  >{`${t("CLEAR")}`}</span>
                 )}
               </div>
             </div>

@@ -12,6 +12,9 @@
     "DESC": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
     "MORE": "Discover more"
   },
+  "MINICART": {
+    "REMOVE": "Remove"
+  },
   "MENU": {
     "PERFUME": "Perfume",
     "CANDLES": "Candles",

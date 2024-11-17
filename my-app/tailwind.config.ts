@@ -11,10 +11,11 @@ const config: Config = {
       colors: {
         brown: {
           normal: "#8C7353",
+          100: "rgba(140,115,83,.5)",
         },
         white: {
           normal: "#fafafa",
-          100:"rgba(250,250,250,.8)" 
+          100: "rgba(250,250,250,.8)",
         },
         gray: {
           light: "#e9e9eb",

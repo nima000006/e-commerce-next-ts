@@ -5,9 +5,10 @@ import { RootState, setLanguage } from "@/app/redux/languageSlice";
 import SearchBox from "./searchBox/SearchBox";
 import Style from "./Languages.module.scss";
 import { fetchLanguages, saveLanguage } from "./Languages.service";
+import { AppDispatch } from "@/app/redux/store";
 
 const Languages = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const selectedLanguageFromStore = useSelector(
     (state: RootState) => state.language.selectedLanguage
   );

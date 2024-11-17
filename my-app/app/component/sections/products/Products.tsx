@@ -16,7 +16,7 @@ import Style from "./Products.module.scss";
 import Skeleton from "react-loading-skeleton";
 import { useTranslation } from "../../languageProvider/LanguageProvider";
 import { Product } from "@/app/models/productsModel";
-import { fetchCartList } from "@/app/redux/fetchCartSlice";
+import { fetchCartList } from "@/app/redux/addToCartSlice";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();

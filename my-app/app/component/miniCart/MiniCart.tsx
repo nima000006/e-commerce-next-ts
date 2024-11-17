@@ -8,8 +8,10 @@ import CloseIcon from "../closeIcon/CloseIcon";
 import Link from "next/link";
 import Style from "./MiniCart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCartList } from "@/app/redux/fetchCartSlice";
+import { fetchCartList } from "@/app/redux/addToCartSlice";
 import { AppDispatch, RootState } from "@/app/redux/store";
+import ProductRecommender from "./ProductRecommender";
+import AddToCartProducts from "./AddToCartProducts";
 
 interface Props {
   menuItems: TranslationData;
@@ -20,11 +22,11 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
   const toggleCart = () => setIsOpen(!isOpen);
   const closeCart = () => setIsOpen(false);
   const t = useTranslation();
+  const productsRecommender = useSelector(
+    (state: RootState) => state.products.items
+  );
   // Access cart items from Redux store
-  const cartItems = useSelector((state: RootState) => state.fetchCart.items);
-  // const cartStatus = useSelector((state: RootState) => state.fetchCart.status);
-  // const cartError = useSelector((state: RootState) => state.fetchCart.error);
-
+  const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch<AppDispatch>();
 
   // Fetch cart items when the component mounts
@@ -66,20 +68,27 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
         } w-[300px] h-full bg-white-normal border border-r-brown-normal shadow-lg z-20 ${
           isOpen
             ? "transform translate-x-0 transition-transform duration-500 ease-in-out"
-            : cartPositionClass
+            : `${cartPositionClass}`
         }`}
       >
-        <div className="h-full">
+        <div className="h-[100vh] overflow-hidden flex flex-col">
           <div className="border border-b-[#8c735338] p-[15px] flex justify-between">
             <span className="text-brown-normal font-thin text-[14px]">
               {`${t("CART")}`} ({cartItems.length})
             </span>
             <CloseIcon onClick={closeCart} />
           </div>
-          <div className="p-[15px] flex flex-col w-full h-full justify-center ">
-            <p className="text-brown-normal text-center mb-5 text-[14px] font-thin">{`${t(
-              "CART_EMPTY"
-            )}`}</p>
+          <div
+            className={`p-[15px] flex flex-grow-0 flex-shrink-0 flex-col overflow-auto ${Style.container_content}`}
+          >
+            {productsRecommender.length > 0 ? (
+              <AddToCartProducts />
+            ) : (
+              <p className="text-brown-normal text-center mb-5 text-[14px] font-thin">{`${t(
+                "CART_EMPTY"
+              )}`}</p>
+            )}
+
             <div className={`w-full ${Style.grid_container}`}>
               {menuItems.map((item: TranslationData) => (
                 <Link
@@ -91,6 +100,7 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
                 </Link>
               ))}
             </div>
+            <ProductRecommender />
           </div>
         </div>
       </div>

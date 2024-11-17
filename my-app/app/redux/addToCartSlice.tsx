@@ -1,66 +1,134 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { addToCart as addToCardService } from "@/app/component/sections/products/Product.service";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  fetchCartItems,
+  addToCart as addToCartService,
+} from "@/app/component/sections/products/Product.service";
 import { Product } from "../models/productsModel";
 
-// Define async thunk for adding a product to the cart
-export const addToCart = createAsyncThunk<
-  Product, // Type of returned data (single product added to the cart)
-  Product, // Type of argument passed to the thunk (product to be added)
-  { rejectValue: string } // Rejection type
->("products/addToCart", async (productData, { rejectWithValue }) => {
-  try {
-    const data = await addToCardService(productData); // Call the service with productData
-    return data; // Resolve with the added product
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return rejectWithValue(error.message); // Handle the error properly and pass the error message
-    } else {
-      return rejectWithValue("An unknown error occurred");
-    }
-  }
-});
-
-interface ProductsState {
-  items: Product[]; // Array of products in the cart
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
+// Extended Product type to include `count`
+interface ProductWithCount extends Product {
+  count: number;
 }
 
-const initialState: ProductsState = {
+interface CartState {
+  items: ProductWithCount[]; // Cart items with counts
+  status: "idle" | "loading" | "succeeded" | "failed"; // Fetching/Updating status
+  error: string | null; // Error message for failures
+}
+
+const initialState: CartState = {
   items: [],
   status: "idle",
   error: null,
 };
 
-// Create the slice
-const addToCardSlice = createSlice({
-  name: "addToCard",
+// Utility function: find product index by ID
+const findProductIndex = (items: ProductWithCount[], id: number) =>
+  items.findIndex((item) => item.id === id);
+
+// Fetch cart items
+export const fetchCartList = createAsyncThunk<
+  ProductWithCount[],
+  void,
+  { rejectValue: string }
+>("cart/fetchCartList", async (_, { rejectWithValue }) => {
+  try {
+    const data = await fetchCartItems();
+    return data.map((item) => ({ ...item, count: 1 })); // Initialize count
+  } catch (error: unknown) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred"
+    );
+  }
+});
+
+// Add a product to the cart
+export const addToCart = createAsyncThunk<
+  ProductWithCount,
+  Product,
+  { rejectValue: string }
+>("cart/addToCart", async (productData, { rejectWithValue }) => {
+  try {
+    const data = await addToCartService(productData);
+    return { ...data, count: 1 }; // Initialize count
+  } catch (error: unknown) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred"
+    );
+  }
+});
+
+const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {
-    // Add product directly to cart without calling API
-    addProductToCart: (state, action: PayloadAction<Product>) => {
-      state.items.push(action.payload);
+    incrementCount: (state, action: PayloadAction<number>) => {
+      console.log("Current State:", state.items);
+      console.log("Payload:", action.payload);
+      const product = state.items.find((item) => item.id === action.payload);
+      if (product) {
+        product.count += 1;
+      }
+    },
+    decrementCount: (state, action: PayloadAction<number>) => {
+      console.log("Current State:", state.items);
+      console.log("Payload:", action.payload);
+      const product = state.items.find((item) => item.id === action.payload);
+      if (product && product.count > 1) {
+        product.count -= 1;
+      }
+    },
+
+    // Remove a product from the cart
+    removeProduct: (state, action: PayloadAction<number>) => {
+      state.items = state.items.filter((item) => item.id !== action.payload);
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addToCart.pending, (state) => {
+      // Fetch Cart
+      .addCase(fetchCartList.pending, (state) => {
         state.status = "loading";
         state.error = null;
       })
-      .addCase(addToCart.fulfilled, (state, action: PayloadAction<Product>) => {
-        state.status = "succeeded";
-        state.items.push(action.payload);
+      .addCase(
+        fetchCartList.fulfilled,
+        (state, action: PayloadAction<ProductWithCount[]>) => {
+          state.status = "succeeded";
+          state.items = action.payload;
+        }
+      )
+      .addCase(fetchCartList.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? "Failed to fetch cart items.";
       })
+
+      // Add to Cart
+      .addCase(addToCart.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        addToCart.fulfilled,
+        (state, action: PayloadAction<ProductWithCount>) => {
+          const index = findProductIndex(state.items, action.payload.id);
+          if (index !== -1) {
+            state.items[index].count += action.payload.count; // Increment if exists
+          } else {
+            state.items.push(action.payload); // Add if new
+          }
+          state.status = "succeeded";
+        }
+      )
       .addCase(addToCart.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload ?? "An error occurred";
+        state.error = action.payload ?? "Failed to add product to cart.";
       });
   },
 });
 
 // Export actions
-export const { addProductToCart } = addToCardSlice.actions;
+export const { incrementCount, decrementCount, removeProduct } =
+  cartSlice.actions;
 
-// Export the reducer
-export default addToCardSlice.reducer;
+// Export reducer
+export default cartSlice.reducer;
