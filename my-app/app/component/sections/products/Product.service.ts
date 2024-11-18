@@ -1,7 +1,7 @@
 // productService.ts
 import { Product } from "@/app/models/productsModel";
-import { fetchData, postData } from "../../api/apiUtils";
-import { getProducts, addProduct } from "../../api/api";
+import { deleteData, fetchData, postData } from "../../api/apiUtils";
+import { getProducts, addProduct, deleteProduct } from "../../api/api";
 
 // Fetch products from the API
 export const fetchProducts = async () => {
@@ -31,6 +31,16 @@ export const fetchCartItems = async (): Promise<Product[]> => {
     return cartItems;
   } catch (error) {
     console.error("Error fetching cart items:", error);
+    throw error;
+  }
+};
+
+// Remove product from cart (DELETE to API)
+export const removeFromCart = async (productId: number): Promise<void> => {
+  try {
+    await deleteData(`${deleteProduct}/${productId}`); // Use the deleteData utility
+  } catch (error) {
+    console.error("Error removing product from cart:", error);
     throw error;
   }
 };

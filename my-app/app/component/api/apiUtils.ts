@@ -21,3 +21,13 @@ export const postData = async (url: string, body: object) => {
 
   return response.json();
 };
+
+export const deleteData = async (url: string) => {
+  const response = await fetch(url, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to delete: ${response.statusText}`);
+  }
+  return true; 
+};

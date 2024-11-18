@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   fetchCartItems,
   addToCart as addToCartService,
+  removeFromCart as removeFromCartService,
 } from "@/app/component/sections/products/Product.service";
 import { Product } from "../models/productsModel";
 
@@ -22,9 +23,9 @@ const initialState: CartState = {
   error: null,
 };
 
-// Utility function: find product index by ID
-const findProductIndex = (items: ProductWithCount[], id: number) =>
-  items.findIndex((item) => item.id === id);
+// Utility function: find product by ID
+const findProductById = (items: ProductWithCount[], id: number) =>
+  items.find((item) => item.id === id);
 
 // Fetch cart items
 export const fetchCartList = createAsyncThunk<
@@ -58,30 +59,44 @@ export const addToCart = createAsyncThunk<
   }
 });
 
+// Remove a product from the cart
+export const removeProductFromCart = createAsyncThunk<
+  number,
+  number,
+  { rejectValue: string }
+>("cart/removeProductFromCart", async (productId, { rejectWithValue }) => {
+  try {
+    await removeFromCartService(productId); // API call to remove product
+    return productId; // Return ID of removed product
+  } catch (error: unknown) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred"
+    );
+  }
+});
+// Remove all counts of products
+export const removeAllCountsOfProducts = createAsyncThunk<
+  number[], // Array of Product IDs
+  number[], // Payload: Array of Product IDs
+  { rejectValue: string }
+>("cart/removeAllCountsOfProducts", async (productIds, { rejectWithValue }) => {
+  try {
+    // Simulate API call to remove products
+    await Promise.all(productIds.map(id => removeFromCartService(id)));
+    return productIds; // Return array of product IDs after successful removal
+  } catch (error: unknown) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "An unknown error occurred"
+    );
+  }
+});
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    incrementCount: (state, action: PayloadAction<number>) => {
-      console.log("Current State:", state.items);
-      console.log("Payload:", action.payload);
-      const product = state.items.find((item) => item.id === action.payload);
-      if (product) {
-        product.count += 1;
-      }
-    },
-    decrementCount: (state, action: PayloadAction<number>) => {
-      console.log("Current State:", state.items);
-      console.log("Payload:", action.payload);
-      const product = state.items.find((item) => item.id === action.payload);
-      if (product && product.count > 1) {
-        product.count -= 1;
-      }
-    },
-
-    // Remove a product from the cart
-    removeProduct: (state, action: PayloadAction<number>) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+    resetCart: (state) => {
+      state.items = [];
     },
   },
   extraReducers: (builder) => {
@@ -110,11 +125,11 @@ const cartSlice = createSlice({
       .addCase(
         addToCart.fulfilled,
         (state, action: PayloadAction<ProductWithCount>) => {
-          const index = findProductIndex(state.items, action.payload.id);
-          if (index !== -1) {
-            state.items[index].count += action.payload.count; // Increment if exists
+          const product = findProductById(state.items, action.payload.id);
+          if (product) {
+            product.count += action.payload.count; // Increment count if product exists
           } else {
-            state.items.push(action.payload); // Add if new
+            state.items.push(action.payload); // Add new product
           }
           state.status = "succeeded";
         }
@@ -122,13 +137,45 @@ const cartSlice = createSlice({
       .addCase(addToCart.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload ?? "Failed to add product to cart.";
+      })
+
+      // Remove from Cart
+      .addCase(removeProductFromCart.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(
+        removeProductFromCart.fulfilled,
+        (state, action: PayloadAction<number>) => {
+          state.items = state.items.filter(
+            (item) => item.id !== action.payload
+          );
+          state.status = "succeeded";
+        }
+      )
+      .addCase(removeProductFromCart.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload ?? "Failed to remove product from cart.";
+      })
+      // Remove All Counts of Products
+      .addCase(
+        removeAllCountsOfProducts.fulfilled,
+        (state, action: PayloadAction<number[]>) => {
+          // Remove all products with matching IDs
+          const idsToRemove = new Set(action.payload); // Set for faster lookup
+          state.items = state.items.filter((item) => !idsToRemove.has(item.id)); // Filter out all matching products
+          state.status = "succeeded";
+        }
+      )
+      .addCase(removeAllCountsOfProducts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error =
+          action.payload ?? "Failed to remove all counts of the products.";
       });
   },
 });
 
 // Export actions
-export const { incrementCount, decrementCount, removeProduct } =
-  cartSlice.actions;
+export const { resetCart } = cartSlice.actions;
 
 // Export reducer
 export default cartSlice.reducer;
