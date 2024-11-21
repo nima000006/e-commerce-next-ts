@@ -22,9 +22,6 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
   const toggleCart = () => setIsOpen(!isOpen);
   const closeCart = () => setIsOpen(false);
   const t = useTranslation();
-  const productsRecommender = useSelector(
-    (state: RootState) => state.products.items
-  );
   // Access cart items from Redux store
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch<AppDispatch>();
@@ -32,7 +29,7 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
   // Fetch cart items when the component mounts
   useEffect(() => {
     dispatch(fetchCartList()); // Dispatch fetchCartList to load cart items
-  }, []);
+  }, [dispatch, cartItems]);
 
   const selectedLanguage = useSelector(
     (state: RootState) => state.language.selectedLanguage
@@ -81,7 +78,7 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
           <div
             className={`p-[15px] flex flex-grow-0 flex-shrink-0 flex-col overflow-auto ${Style.container_content}`}
           >
-            {productsRecommender.length > 0 ? (
+            {cartItems.length > 0 ? (
               <AddToCartProducts />
             ) : (
               <p className="text-brown-normal text-center mb-5 text-[14px] font-thin">{`${t(

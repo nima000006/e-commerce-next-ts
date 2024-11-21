@@ -11,12 +11,12 @@ import "swiper/css/scrollbar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { fetchProducts } from "@/app/redux/productSlice";
-import { addToCart } from "@/app/redux/addToCartSlice"; // Import the action
 import Style from "./Products.module.scss";
 import Skeleton from "react-loading-skeleton";
 import { useTranslation } from "../../languageProvider/LanguageProvider";
 import { Product } from "@/app/models/productsModel";
 import { fetchCartList } from "@/app/redux/addToCartSlice";
+import { addToCart } from "./Product.service";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -69,14 +69,7 @@ const Products = () => {
 
   const handleAddToCart = (product: Product) => {
     dispatch(fetchCartList());
-    dispatch(addToCart(product))
-      .unwrap()
-      .then((result) => {
-        console.log("Product added to cart:", result);
-      })
-      .catch((error) => {
-        console.error("Failed to add product to cart:", error);
-      });
+    addToCart(product);
   };
 
   const renderNavigationButtons = () => {

@@ -24,7 +24,6 @@ export const addToCart = async (productData: Product) => {
     throw error;
   }
 };
-
 export const fetchCartItems = async (): Promise<Product[]> => {
   try {
     const cartItems = await fetchData(addProduct); // Assuming getCartItems API fetches cart data
@@ -45,4 +44,22 @@ export const removeFromCart = async (productId: number): Promise<void> => {
   }
 };
 
+export const removeAllFromCart = async (productId: number): Promise<void> => {
+  try {
+    const cartItems = await fetchData(addProduct); // Fetch all cart items
+    const itemsToRemove = cartItems.filter(
+      (item: Product) => item.id === productId
+    );
+
+    // Delete each item with the matching productId
+    await Promise.all(
+      itemsToRemove.map((item: Product) =>
+        deleteData(`${deleteProduct}/${item.id}`)
+      )
+    );
+  } catch (error) {
+    console.error("Error removing all items from cart:", error);
+    throw error;
+  }
+};
 
