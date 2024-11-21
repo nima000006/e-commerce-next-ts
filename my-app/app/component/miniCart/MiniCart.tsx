@@ -12,6 +12,7 @@ import { fetchCartList } from "@/app/redux/addToCartSlice";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import ProductRecommender from "./ProductRecommender";
 import AddToCartProducts from "./AddToCartProducts";
+import Button from "../button/Button";
 
 interface Props {
   menuItems: TranslationData;
@@ -38,6 +39,10 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
   // Set the initial position based on language without transition effect
   const cartPositionClass =
     selectedLanguage === "Fa" ? "-translate-x-full" : "translate-x-full";
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.count,
+    0
+  );
 
   return (
     <div className="px-[12px]">
@@ -62,10 +67,10 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
       <div
         className={`fixed top-0 ${
           selectedLanguage === "Fa" ? "left-0" : "right-0"
-        } w-[300px] h-full bg-white-normal border border-r-brown-normal shadow-lg z-20 ${
-          isOpen
-            ? "transform translate-x-0 transition-transform duration-500 ease-in-out"
-            : `${cartPositionClass}`
+        } w-[300px] h-full bg-white-normal border border-r-brown-normal shadow-lg z-20 transform ${
+          isOpen ? "translate-x-0" : cartPositionClass
+        } ${
+          isOpen !== null ? "transition-transform duration-500 ease-in-out" : ""
         }`}
       >
         <div className="h-[100vh] overflow-hidden flex flex-col">
@@ -81,23 +86,34 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
             {cartItems.length > 0 ? (
               <AddToCartProducts />
             ) : (
-              <p className="text-brown-normal text-center mb-5 text-[14px] font-thin">{`${t(
-                "CART_EMPTY"
-              )}`}</p>
+              <>
+                <p className="text-brown-normal text-center mb-5 text-[14px] font-thin">{`${t(
+                  "CART_EMPTY"
+                )}`}</p>
+                <div className={`w-full ${Style.grid_container}`}>
+                  {menuItems.map((item: TranslationData) => (
+                    <Link
+                      href={item.href}
+                      key={item.id}
+                      className="h-[43px] border border-brown-normal text-brown-normal text-[14px] font-thin flex items-center justify-center"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </>
             )}
-
-            <div className={`w-full ${Style.grid_container}`}>
-              {menuItems.map((item: TranslationData) => (
-                <Link
-                  href={item.href}
-                  key={item.id}
-                  className="h-[43px] border border-brown-normal text-brown-normal text-[14px] font-thin flex items-center justify-center"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-            <ProductRecommender />
+            {cartItems.length > 0 ? (
+              <div className="absolute bottom-0 p-[12px] w-full left-0 border border-t-brown-100 border-b-transparent border-l-transparent border-r-transparent">
+                <div className="capitalize text-brown-normal font-thin flex items-center justify-between">
+                  {`${t("TOTALPRICE")}`}
+                  <span>${totalPrice}</span>
+                </div>
+                <Button>{`${t("CHECKOUT")}`}</Button>
+              </div>
+            ) : (
+              <ProductRecommender />
+            )}
           </div>
         </div>
       </div>

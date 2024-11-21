@@ -2,13 +2,14 @@
 import { Product } from "@/app/models/productsModel";
 import React, { useState, useMemo } from "react";
 import { useTranslation } from "../languageProvider/LanguageProvider";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/store";
 import {
   addToCart,
   removeFromCart,
   removeAllFromCart,
 } from "../sections/products/Product.service";
+import { fetchCartList } from "@/app/redux/addToCartSlice";
 const FALLBACK_IMAGE =
   "https://www.perfumerh.com/cdn/shop/files/INKRewritten50mlBottleFRONT.jpg?crop=center&height=3431&v=1729121232&width=3431";
 
@@ -16,7 +17,7 @@ const AddToCartProducts = () => {
   const [imageError, setImageError] = useState<Record<string, boolean>>({});
   const t = useTranslation();
   const products = useSelector((state: RootState) => state.cart.items);
-
+  const dispatch = useDispatch<AppDispatch>();
   // Using useMemo to optimize and avoid recalculating grouped products on each render
   const groupedProducts = useMemo(() => {
     return products.reduce<Record<number, Product & { count: number }>>(
@@ -39,15 +40,33 @@ const AddToCartProducts = () => {
       [id]: true,
     }));
   };
-const handleRemoveAll = async (id: number) => {
-  try {
-    await removeAllFromCart(id); // Remove all instances from the cart
-    console.log(`All items with id ${id} removed successfully.`);
-  } catch (error) {
-    console.error("Failed to remove all items:", error);
-  }
-};
-
+  const handleRemoveAll = async (id: number) => {
+    dispatch(fetchCartList());
+    try {
+      await removeAllFromCart(id); // Remove all instances from the cart
+      console.log(`All items with id ${id} removed successfully.`);
+    } catch (error) {
+      console.error("Failed to remove all items:", error);
+    }
+  };
+  const handleRemove = async (id: number) => {
+    dispatch(fetchCartList());
+    try {
+      await removeFromCart(id); // Remove all instances from the cart
+      console.log(`All items with id ${id} removed successfully.`);
+    } catch (error) {
+      console.error("Failed to remove all items:", error);
+    }
+  };
+  const handleAdd = async (product: Product) => {
+    dispatch(fetchCartList());
+    try {
+      await addToCart(product);
+      console.log(`All items with name ${product} removed successfully.`);
+    } catch (error) {
+      console.error("Failed to remove all items:", error);
+    }
+  };
   return (
     <div>
       {Object.values(groupedProducts).map((item) => (
@@ -67,13 +86,13 @@ const handleRemoveAll = async (id: number) => {
             </p>
             <div className="flex h-[30px] w-[70px] mt-3 items-center border border-brown-100 justify-around text-brown-normal text-[16px]">
               <div
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => handleRemove(item.id)}
                 className="cursor-pointer"
               >
                 -
               </div>
               <div className="cursor-pointer font-thin">{item.count}</div>
-              <div onClick={() => addToCart(item)} className="cursor-pointer">
+              <div onClick={() => handleAdd(item)} className="cursor-pointer">
                 +
               </div>
             </div>

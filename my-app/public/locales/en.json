@@ -7,6 +7,9 @@
   "CART_EMPTY": "Your Cart is Empty",
   "NEW": "new",
   "QUICKADD": "quick add",
+  "TOTALPRICE": "Subtotal",
+  "CHECKOUT": "Checkout",
+  "MINIDESC": "Shipping, taxes, and discount codes are calculated at checkout",
   "DISCOVER": {
     "HEAD": "Sample",
     "DESC": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",

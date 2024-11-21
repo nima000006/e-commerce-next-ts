@@ -4,9 +4,11 @@ import SubscribeForm from "../subscribeForm/SubscribeForm";
 import Autocomplete from "../autocomplete/Autocomplete";
 import RadioButtonFooter from "../radioButton/RadioButtonFooter";
 import Button from "../button/Button";
+import { useTranslation } from "../languageProvider/LanguageProvider";
 
 const FooterForm = () => {
   const [validation, setValidation] = useState<boolean>(false);
+    const t = useTranslation();
   const FormHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setValidation(true);
@@ -17,7 +19,7 @@ const FooterForm = () => {
         <SubscribeForm mandatory={validation} />
         <Autocomplete mandatory={validation} />
         <RadioButtonFooter />
-        <Button />
+        <Button>{`${t("FOOTER.SUBSCRIBE")}`}</Button>
       </form>
     </>
   );

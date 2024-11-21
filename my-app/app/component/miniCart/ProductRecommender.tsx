@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/store";
 import CloseIcon from "../closeIcon/CloseIcon";
 import { Product } from "@/app/models/productsModel";
 import { addToCart } from "../sections/products/Product.service";
+import { fetchCartList } from "@/app/redux/addToCartSlice";
 
 const ProductRecommender = () => {
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
@@ -12,6 +13,7 @@ const ProductRecommender = () => {
   const productsRecommender = useSelector(
     (state: RootState) => state.products.items
   );
+  const dispatch = useDispatch<AppDispatch>();
   // Find all new products
   const newProducts = productsRecommender.filter((item) => item.new);
 
@@ -22,6 +24,7 @@ const ProductRecommender = () => {
   const displayedProducts = [...newProducts, ...additionalProducts].slice(0, 3);
 
   const handleAddToCart = (item: Product) => {
+     dispatch(fetchCartList());
     addToCart(item);
   };
   const handleImageError = (id: string) => {
