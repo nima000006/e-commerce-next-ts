@@ -4,6 +4,7 @@ import ReduxProvider from "./redux/ReduxProvider";
 import { LanguageProvider } from "./component/languageProvider/LanguageProvider";
 import Header from "./component/header/Header";
 import Footer from "./component/footer/Footer";
+import BackToTop from "./component/backToTop/BackToTop";
 
 export const metadata: Metadata = {
   title: "E-commerce-sample",
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html>
       <body className="">
+        <BackToTop/>
         <ReduxProvider>
           <LanguageProvider>
             <Header/>

@@ -39,10 +39,9 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
   // Set the initial position based on language without transition effect
   const cartPositionClass =
     selectedLanguage === "Fa" ? "-translate-x-full" : "translate-x-full";
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.count,
-    0
-  );
+  const totalPrice = cartItems
+    .reduce((total, item) => total + item.price * item.count, 0)
+    .toFixed(2);;
 
   return (
     <div className="px-[12px]">
@@ -109,7 +108,9 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
                   {`${t("TOTALPRICE")}`}
                   <span>${totalPrice}</span>
                 </div>
-                <Button>{`${t("CHECKOUT")}`}</Button>
+                <Button>
+                  <Link href={"/checkout"}>{`${t("CHECKOUT")}`}</Link>
+                </Button>
               </div>
             ) : (
               <ProductRecommender />

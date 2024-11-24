@@ -1,0 +1,16 @@
+.container_image {
+  position: relative;
+  overflow: hidden;
+  .quick_add {
+    position: absolute;
+    transition: 0.3s all linear;
+    left: 0;
+    bottom: -100px;
+    height: 30px;
+  }
+  &:hover {
+    .quick_add {
+      bottom: 0;
+    }
+  }
+}

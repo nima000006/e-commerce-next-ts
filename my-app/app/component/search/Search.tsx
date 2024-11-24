@@ -64,7 +64,7 @@ const Search = () => {
               <SearchIcon />
               <div className="w-full flex">
                 <input
-                  className="outline-0 w-[85%] px-[16px] text-[14px] border-0 bg-transparent hover:outline-0 focus:outline-none text-brown-normal placeholder:text-brown-normal"
+                  className="outline-0 w-[85%] px-[16px] text-[14px] border-0 bg-transparent hover:outline-0 font-thin focus:outline-none text-brown-normal placeholder:text-brown-normal placeholder:font-thin"
                   type="text"
                   value={searchValue}
                   placeholder={`${t("SEARCH_PLACEHOLDER")}`}

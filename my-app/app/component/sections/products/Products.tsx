@@ -17,6 +17,7 @@ import { useTranslation } from "../../languageProvider/LanguageProvider";
 import { Product } from "@/app/models/productsModel";
 import { fetchCartList } from "@/app/redux/addToCartSlice";
 import { addToCart } from "./Product.service";
+import Link from "next/link";
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -169,7 +170,10 @@ const Products = () => {
                 <div
                   className={`flex flex-col justify-between cursor-pointer ${Style.swiper_slide}`}
                 >
-                  <div className={Style.swiper_slide_image}>
+                  <Link
+                    href={`/products/${item.id}`}
+                    className={Style.swiper_slide_image}
+                  >
                     <img
                       src={
                         imageError[item.id]
@@ -188,7 +192,7 @@ const Products = () => {
                     >
                       {`${t("QUICKADD")}`}
                     </div>
-                  </div>
+                  </Link>
                   <h3 className="text-center mt-5 font-semibold text-brown-normal">
                     {item.brand}
                   </h3>
