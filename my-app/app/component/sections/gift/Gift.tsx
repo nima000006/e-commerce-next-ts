@@ -28,8 +28,8 @@ const Gift = () => {
   const products = useSelector((state: RootState) => state.products.items);
 
   return (
-    <div className="grid max-w-[1525px] mx-[25px] grid-cols-1 lg:grid-cols-2 mb-10 ">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <div className="grid max-w-[1525px] md:mx-[25px] mx-0 grid-cols-1 lg:grid-cols-2 mb-10 ">
+      <div className="grid grid-cols-2 lg:grid-cols-2 gap-10">
         {products
           .filter((item) => item.new) // Filter only new products
           .slice(0, 4) // Limit to the first 4 items
@@ -38,7 +38,7 @@ const Gift = () => {
               key={item.id}
               className="flex cursor-pointer flex-col h-full items-center justify-center text-center relative"
             >
-              <div className="h-[30px] absolute top-0 left-5 z-10 w-[45px] bg-brown-normal text-white-normal text-[14px] font-bold flex items-center justify-center">
+              <div className="h-[30px] absolute top-0 lg:left-5 left-2 z-10 w-[45px] bg-brown-normal text-white-normal text-[14px] font-bold flex items-center justify-center">
                 <p className="pb-1">{`${t("NEW")}`}</p>
               </div>
               <Link
@@ -59,7 +59,10 @@ const Gift = () => {
                 />
                 <div
                   className={`flex font-semibold text-brown-normal w-full items-center justify-center backdrop-blur-[10px] ${Style.quick_add}`}
-                  onClick={() => handleAddToCart(item)} // Pass the product to the handler
+                  onClick={(event) => {
+                    event.preventDefault(); // Prevent the link navigation
+                    handleAddToCart(item); // Execute Quick Add functionality
+                  }}
                 >
                   {`${t("QUICKADD")}`}
                 </div>
@@ -78,7 +81,7 @@ const Gift = () => {
             </div>
           ))}
       </div>
-      <div className="bg-gift bg-cover bg-center flex flex-col justify-center items-center">
+      <div className="bg-gift bg-cover bg-center flex flex-col justify-center items-center min-h-[400px] md:mt-0 mt-10 ">
         <h6 className="text-white-normal font-semibold max-w-[333px] text-[14px]">
           {`${t("GIFTHEADER")}`}
         </h6>

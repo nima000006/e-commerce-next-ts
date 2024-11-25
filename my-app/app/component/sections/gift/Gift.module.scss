@@ -5,7 +5,10 @@
     position: absolute;
     transition: 0.3s all linear;
     left: 0;
-    bottom: -100px;
+    bottom: 0;
+    @media screen and (min-width: 1025px) {
+      bottom: -100px;
+    }
     height: 30px;
   }
   &:hover {

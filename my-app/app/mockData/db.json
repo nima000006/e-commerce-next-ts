@@ -9,7 +9,16 @@
       "lang": "Fa"
     }
   ],
-  "selected": [],
+  "selected": [
+    {
+      "id": "1ab7",
+      "selectedLanguage": "Fa"
+    },
+    {
+      "id": "3855",
+      "selectedLanguage": "En"
+    }
+  ],
   "addtocart": [],
   "products": [
     {

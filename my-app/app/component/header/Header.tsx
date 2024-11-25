@@ -28,11 +28,15 @@ const Header = () => {
       >
         {`${t("TEXT_ABOVE")}`}
       </BoxLine>
-      <div className={`${isSticky ? "fixed top-0 left-0 right-0 z-50 bg-white-normal" : ""}`}>
+      <div
+        className={`${
+          isSticky ? "fixed top-0 left-0 right-0 z-50 bg-white-normal" : ""
+        }`}
+      >
         <Menu />
       </div>
       <BoxLine
-        className={`flex justify-center items-center bg-white-normal text-brown-normal h-[41px] text-[14px]`}
+        className={`flex text-wrap text-center w-full justify-center items-center bg-white-normal text-brown-normal h-[41px] text-[14px]`}
       >
         {`${t("TEXT_UNDER")}`}
       </BoxLine>

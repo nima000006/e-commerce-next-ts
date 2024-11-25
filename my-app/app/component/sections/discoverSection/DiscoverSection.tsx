@@ -17,7 +17,7 @@ const DiscoverSection = () => {
   return (
     <div className="bg-white-normal mb-5">
       <div
-        className={`max-w-[1525px]  mx-[25px] max-h-[400px] flex justify-center relative`}
+        className={`"max-w-[1525px] h-[400px] flex justify-center relative md:mx-[25px] mx-0"`}
       >
         <div className="image-overlay bg-[#2c200433] absolute top-0 left-0 h-full w-full flex justify-center items-center">
           <div className="max-w-[225px] m-auto z-10">
@@ -55,7 +55,7 @@ const DiscoverSection = () => {
         </video>
       </div>
       {openPopOp && (
-        <div className="fixed flex flex-col justify-center items-end z-30 top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.4)]">
+        <div className="fixed flex flex-col justify-center items-end z-[1000] top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.4)]">
           <button
             className="w-[40px] h-[40px] flex justify-center items-center text-[12px] font-thin bg-white-normal cursor-pointer"
             onClick={ClosePopUp}

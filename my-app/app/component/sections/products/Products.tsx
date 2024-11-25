@@ -159,11 +159,29 @@ const Products = () => {
               swiperRef.current = swiper;
               setSwiperInstance(swiper);
             }}
-            spaceBetween={50}
-            slidesPerView={5}
+            spaceBetween={30}
+            slidesPerView={2.5} // Default for small screens
             navigation={false}
             pagination={false}
             onSlideChange={handleSlideChange}
+            breakpoints={{
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              768: {
+                slidesPerView: 3.5,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+              },
+              1280: {
+                slidesPerView: 5,
+                spaceBetween: 50,
+              },
+            }}
           >
             {products.map((item) => (
               <SwiperSlide key={item.id}>
@@ -188,7 +206,10 @@ const Products = () => {
                     />
                     <div
                       className={`flex font-semibold text-brown-normal w-full items-center justify-center backdrop-blur-[10px] ${Style.quick_add}`}
-                      onClick={() => handleAddToCart(item)} // Pass the product to the handler
+                      onClick={(event) => {
+                        event.preventDefault(); // Prevent the link navigation
+                        handleAddToCart(item); // Execute Quick Add functionality
+                      }}
                     >
                       {`${t("QUICKADD")}`}
                     </div>
@@ -211,6 +232,7 @@ const Products = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+
           <div className="absolute top-1/2 left-0 right-0 z-10 flex justify-between">
             {renderNavigationButtons()}
           </div>
