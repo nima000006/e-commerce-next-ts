@@ -7,9 +7,23 @@ import Languages from "../languages/Languages";
 import Search from "../search/Search";
 import { TranslationData } from "../languageProvider/LanguageProvider";
 import MiniCart from "../miniCart/MiniCart";
+import { useBreakpoint } from "@/app/tools/CheckBreakPoint";
+import HamburgerIcon from "../hamburgerIcon/HamburgerIcon";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
+import CloseIcon from "../closeIcon/CloseIcon";
 
 const Menu = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const closeCart = () => setIsOpen(false);
   const menuItems = MenuItems();
+  const breakpoint = useBreakpoint();
+  const toggleCart = () => setIsOpen(!isOpen);
+  const selectedLanguage = useSelector(
+    (state: RootState) => state.language.selectedLanguage
+  );
+  const positionClass =
+    selectedLanguage === "Fa" ? "translate-x-full" : "-translate-x-full";
   const [hoveredItem, setHoveredItem] = useState<TranslationData | null>(null);
 
   const megaMenuRef = useRef<HTMLDivElement | null>(null); // Create a ref for mega menu
@@ -42,29 +56,89 @@ const Menu = () => {
 
   return (
     <div
-      className={`${Style.container} relative flex items-center justify-between font-semibold h-[84px] px-[50px]`}
+      className={`${Style.container} relative flex items-center justify-between font-semibold h-[84px] px-[25px]`}
     >
-      <Logo />
-      <ul className="flex items-center justify-center h-[100%]">
-        {menuItems.map((item: TranslationData) => (
-          <li
-            className={`px-[15px] relative text-brown-normal font-thin ${Style.items} h-[100%] flex flex-col justify-center`}
-            key={item.id}
-            onMouseEnter={() => handleMenuItemMouseEnter(item)}
-            onMouseLeave={handleMenuItemMouseLeave}
+      {/* Hamburger Icon for smaller breakpoints */}
+      {breakpoint && ["sm", "md", "lg"].includes(breakpoint) && (
+        <>
+          <div className="flex items-center justify-center">
+            <button onClick={toggleCart}>
+              <HamburgerIcon />
+            </button>
+
+            {breakpoint && ["sm", "md"].includes(breakpoint) && <Search />}
+          </div>
+          {/* Overlay */}
+          {isOpen && (
+            <div
+              className="fixed inset-0 bg-[rgba(0,0,0,0.4)] z-10"
+              onClick={closeCart}
+            />
+          )}
+          {/* Cart Sidebar */}
+          <div
+            className={`fixed top-0 p-5 ${
+              selectedLanguage === "Fa" ? "right-0" : "left-0"
+            } w-[300px] h-full bg-white-normal border border-l-brown-normal shadow-lg z-20 transform ${
+              isOpen ? "translate-x-0" : positionClass
+            } ${
+              isOpen !== null
+                ? "transition-transform duration-500 ease-in-out"
+                : ""
+            }`}
           >
-            <Link href={item.href}>{item.label}</Link>
-            <span
-              className={`h-[1px] absolute bottom-[-5px] left-0 w-full bg-brown-normal ${Style.hover_line}`}
-            ></span>
-          </li>
-        ))}
-      </ul>
+            <div className="flex items-center justify-end">
+              <CloseIcon onClick={closeCart} />
+            </div>
+
+            <ul className="flex flex-col">
+              {menuItems.map((item: TranslationData) => (
+                <li key={item.id} className={Style.menulist_mobile_container}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center p-3 text-[18px] border border-transparent border-b-brown-100 justify-between uppercase text-brown-normal font-thin mb-5"
+                  >
+                    {item.label} <span>→</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
+
+      <Logo />
+
+      {/* Regular Menu for larger screens */}
+      {breakpoint === "xl" && (
+        <ul className="flex items-center justify-center h-[100%]">
+          {menuItems.map((item: TranslationData) => (
+            <li
+              className={`px-[15px] relative text-brown-normal font-thin ${Style.items} h-[100%] flex flex-col justify-center`}
+              key={item.id}
+              onMouseEnter={() => handleMenuItemMouseEnter(item)}
+              onMouseLeave={handleMenuItemMouseLeave}
+            >
+              <Link href={item.href}>{item.label}</Link>
+              <span
+                className={`h-[1px] absolute bottom-[-5px] left-0 w-full bg-brown-normal ${Style.hover_line}`}
+              ></span>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="flex items-center">
         <Languages />
-        <Search />
+        {breakpoint && ["lg", "xl"].includes(breakpoint) && (
+          <>
+            <Search />
+          </>
+        )}
         <MiniCart menuItems={menuItems} />
       </div>
+
+      {/* Mega Menu */}
       {hoveredItem && (
         <div
           ref={megaMenuRef} // Attach the ref to the mega menu

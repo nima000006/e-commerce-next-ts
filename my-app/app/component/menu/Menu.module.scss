@@ -19,4 +19,17 @@
     border-top: 1px solid #f2efef;
     background-color: rgba(255, 255, 255, 0.8);
   } 
+  .menulist_mobile_container{
+    span{
+          transition: .3s  all;
+        }
+    &:hover{
+      a{
+        span{
+          transform: translateX(10px);
+          transition: .3s  all;
+        }
+      }
+    }
+  }
 }

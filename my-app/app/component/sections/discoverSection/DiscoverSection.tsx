@@ -17,7 +17,7 @@ const DiscoverSection = () => {
   return (
     <div className="bg-white-normal mb-5">
       <div
-        className={`max-w-[1525px]  mx-[50px] max-h-[400px] flex justify-center relative`}
+        className={`max-w-[1525px]  mx-[25px] max-h-[400px] flex justify-center relative`}
       >
         <div className="image-overlay bg-[#2c200433] absolute top-0 left-0 h-full w-full flex justify-center items-center">
           <div className="max-w-[225px] m-auto z-10">

@@ -9,6 +9,7 @@ import { fetchCartList } from "@/app/redux/addToCartSlice";
 import { addToCart } from "../products/Product.service";
 import Style from "./Gift.module.scss";
 import Link from "next/link";
+import Button from "../../button/Button";
 
 const Gift = () => {
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
@@ -27,7 +28,7 @@ const Gift = () => {
   const products = useSelector((state: RootState) => state.products.items);
 
   return (
-    <div className="grid max-w-[1525px] mx-[50px] grid-cols-1 lg:grid-cols-2 mb-10 ">
+    <div className="grid max-w-[1525px] mx-[25px] grid-cols-1 lg:grid-cols-2 mb-10 ">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {products
           .filter((item) => item.new) // Filter only new products
@@ -81,9 +82,12 @@ const Gift = () => {
         <h6 className="text-white-normal font-semibold max-w-[333px] text-[14px]">
           {`${t("GIFTHEADER")}`}
         </h6>
-        <em className="text-white-normal font-semibold mt-3 max-w-[333px] text-[14px]">
-          {`${t("GIFTDESC")}`}
-        </em>
+        <p className="max-w-[333px]">
+          <em className="text-white-normal font-semibold mt-3 text-[14px]">
+            {`${t("GIFTDESC")}`}
+          </em>
+        </p>
+        <Button width="w-32">{`${t("GIFTHEADER")}`}</Button>
       </div>
     </div>
   );

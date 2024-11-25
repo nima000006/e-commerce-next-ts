@@ -133,7 +133,7 @@ const Products = () => {
   };
 
   return (
-    <div className={`p-[50px] relative ${Style.container}`}>
+    <div className={`p-[25px] relative ${Style.container}`}>
       {status === "loading" && (
         <div className="grid grid-cols-5 gap-4">
           {Array(5)

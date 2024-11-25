@@ -59,7 +59,7 @@ const Search = () => {
           className={`${Style.popupContent} bg-white-normal`}
           onClick={(event) => event.stopPropagation()}
         >
-          <div className=" h-[84px] flex m-auto px-[50px] items-center justify-between max-w-[1100px]">
+          <div className=" h-[84px] flex m-auto px-[25px] items-center justify-between max-w-[1100px]">
             <div className="flex w-full">
               <SearchIcon />
               <div className="w-full flex">
