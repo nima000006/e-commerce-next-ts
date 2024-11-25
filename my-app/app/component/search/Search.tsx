@@ -1,30 +1,30 @@
 "use client";
 import React, { useState, ChangeEvent, useEffect } from "react";
-import SearchIcon from "../searchIcon/SearchIcon";
+import SearchIcon from "@/app/component/searchIcon/SearchIcon";
 import Style from "./Search.module.scss";
-import CloseIcon from "../closeIcon/CloseIcon";
-import { useTranslation } from "../languageProvider/LanguageProvider";
+import CloseIcon from "@/app/component/closeIcon/CloseIcon";
+import { useTranslation } from "@/app/component/languageProvider/LanguageProvider";
 
 const Search = () => {
   const [searchPopup, setSearchPopup] = useState<boolean>(false);
   const [showClear, setShowClear] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
   const t = useTranslation();
-   const [isSticky, setIsSticky] = useState(false);
-   useEffect(() => {
-     const handleScroll = () => {
-       if (window.scrollY > 100) {
-         setIsSticky(true);
-       } else {
-         setIsSticky(false);
-       }
-     };
+  const [isSticky, setIsSticky] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
 
-     window.addEventListener("scroll", handleScroll);
-     return () => {
-       window.removeEventListener("scroll", handleScroll);
-     };
-   }, []);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const OpenPopup = () => {
     setSearchPopup(true);
@@ -50,9 +50,9 @@ const Search = () => {
       <SearchIcon onClick={OpenPopup} />
 
       <div
-        className={`${Style.popupOverlay} ${
-          searchPopup ? Style.active : ""
-        } ${isSticky ? Style.top_zero: ""}`}
+        className={`${Style.popupOverlay} ${searchPopup ? Style.active : ""} ${
+          isSticky ? Style.top_zero : ""
+        }`}
         onClick={ClosePopup}
       >
         <div
