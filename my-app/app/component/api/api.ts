@@ -6,9 +6,9 @@ const getBaseUrl = (): string => {
     // Client-side
     const domain = window.location.hostname;
     if (domain === "yourdomain.com") {
-      return "https://api.yourdomain.com";
-    } else if (domain === "anotherdomain.com") {
-      return "https://api.anotherdomain.com";
+      return "https://e-commerce-next-ts-ykol.vercel.app";
+    } else if (domain === "https://e-commerce-next-ts-ykol.vercel.app") {
+      return "https://e-commerce-next-ts-ykol.vercel.app";
     } else {
       return "http://localhost:3001"; // Default for local development
     }
