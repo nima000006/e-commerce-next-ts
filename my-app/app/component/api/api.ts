@@ -1,14 +1,17 @@
 const getBaseUrl = (): string => {
   if (typeof window === "undefined") {
     // Server-side
-    return process.env.API_BASE_URL || "http://localhost:3001";
+    return (
+      process.env.API_BASE_URL ||
+      "https://clean-successful-tachometer.glitch.me"
+    );
   } else {
     // Client-side
     const domain = window.location.hostname;
-    if (domain === "https://json-server-in.vercel.app") {
-      return "https://json-server-in.vercel.app";
-    } else if (domain === "https://json-server-in.vercel.app") {
-      return "https://json-server-in.vercel.app";
+    if (domain === "https://clean-successful-tachometer.glitch.me") {
+      return "https://clean-successful-tachometer.glitch.me";
+    } else if (domain === "https://clean-successful-tachometer.glitch.me") {
+      return "https://clean-successful-tachometer.glitch.me";
     } else {
       return "http://localhost:3001"; // Default for local development
     }
