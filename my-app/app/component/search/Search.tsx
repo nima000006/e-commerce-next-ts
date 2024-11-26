@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, ChangeEvent, useEffect } from "react";
-import SearchIcon from "@/app/component/searchIcon/SearchIcon";
+import SearchIcon from "../iconSearch/SearchIcon";
 import Style from "./Search.module.scss";
 import CloseIcon from "@/app/component/closeIcon/CloseIcon";
 import { useTranslation } from "@/app/component/languageProvider/LanguageProvider";
