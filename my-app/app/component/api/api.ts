@@ -5,10 +5,10 @@ const getBaseUrl = (): string => {
   } else {
     // Client-side
     const domain = window.location.hostname;
-    if (domain === "https://e-commerce-next-ts-two.vercel.app") {
-      return "https://e-commerce-next-ts-two.vercel.app";
-    } else if (domain === "https://e-commerce-next-ts-two.vercel.app") {
-      return "https://e-commerce-next-ts-two.vercel.app";
+    if (domain === "https://json-server-in.vercel.app") {
+      return "https://json-server-in.vercel.app";
+    } else if (domain === "https://json-server-in.vercel.app") {
+      return "https://json-server-in.vercel.app";
     } else {
       return "http://localhost:3001"; // Default for local development
     }
