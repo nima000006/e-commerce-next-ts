@@ -5,10 +5,16 @@ const getBaseUrl = (): string => {
   } else {
     // Client-side
     const domain = window.location.hostname;
-    if (domain === "yourdomain.com") {
-      return "https://e-commerce-next-ts-ykol.vercel.app";
-    } else if (domain === "https://e-commerce-next-ts-ykol.vercel.app") {
-      return "https://e-commerce-next-ts-ykol.vercel.app";
+    if (
+      domain ===
+      "https://e-commerce-next-ts-git-master-nimas-projects-7884e4b5.vercel.app"
+    ) {
+      return "https://e-commerce-next-ts-git-master-nimas-projects-7884e4b5.vercel.app";
+    } else if (
+      domain ===
+      "https://e-commerce-next-ts-git-master-nimas-projects-7884e4b5.vercel.app"
+    ) {
+      return "https://e-commerce-next-ts-git-master-nimas-projects-7884e4b5.vercel.app";
     } else {
       return "http://localhost:3001"; // Default for local development
     }
