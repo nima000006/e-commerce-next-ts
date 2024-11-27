@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3001";
+const baseUrl = "/api";
 
 export const languages = `${baseUrl}/language`;
 export const languagesSelected = `${baseUrl}/selected`;
