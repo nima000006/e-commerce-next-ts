@@ -1,5 +1,4 @@
-
-const baseUrl = "https://clean-successful-tachometer.glitch.me";
+const baseUrl = "http://localhost:3001";
 
 export const languages = `${baseUrl}/language`;
 export const languagesSelected = `${baseUrl}/selected`;
