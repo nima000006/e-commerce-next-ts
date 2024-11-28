@@ -84,7 +84,7 @@ const AddToCartProducts = () => {
             <p className="text-[14px] font-thin text-brown-normal mt-2">
               {item.price} x {item.count}
             </p>
-            <div className="flex h-[30px] w-[70px] mt-3 items-center border border-brown-100 justify-around text-brown-normal text-[16px]">
+            <div className="flex h-[30px] w-[70px] mt-3 items-center border border-brown-normal justify-around text-brown-normal text-[16px]">
               <div
                 onClick={() => handleRemove(item.id)}
                 className="cursor-pointer"

@@ -96,7 +96,7 @@ const Menu = () => {
                 <li key={item.id} className={Style.menulist_mobile_container}>
                   <Link
                     href={item.href}
-                    className="flex items-center p-3 text-[18px] border border-transparent border-b-brown-100 justify-between uppercase text-brown-normal font-thin mb-5"
+                    className="flex items-center p-3 text-[18px] border border-transparent border-b-brown-normal justify-between uppercase text-brown-normal font-thin mb-5"
                   >
                     {item.label} <span>→</span>
                   </Link>

@@ -71,7 +71,7 @@ const Gift = () => {
               <p className="font-semibold text-brown-normal">{item.name}</p>
               <p className="font-thin text-brown-normal mt-2">{item.brand}</p>
               <div className="flex justify-between mt-3">
-                <span className="font-thin text-[12px] mx-3 text-brown-100">
+                <span className="font-thin text-[12px] mx-3 text-brown-normal">
                   {`${t("GIFTHEADER")}`}
                 </span>
                 <span className="font-thin text-[12px] mx-3 text-brown-normal">

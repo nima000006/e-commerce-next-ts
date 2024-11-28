@@ -107,7 +107,7 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
               </>
             )}
             {cartItems.length > 0 ? (
-              <div className="absolute bg-white-normal bottom-0 p-[12px] w-full left-0 border border-t-brown-100 border-b-transparent border-l-transparent border-r-transparent">
+              <div className="absolute bg-white-normal bottom-0 p-[12px] w-full left-0 border border-t-brown-normal border-b-transparent border-l-transparent border-r-transparent">
                 <div className="capitalize text-brown-normal font-thin flex items-center justify-between">
                   {`${t("TOTALPRICE")}`}
                   <span>${totalPrice}</span>
