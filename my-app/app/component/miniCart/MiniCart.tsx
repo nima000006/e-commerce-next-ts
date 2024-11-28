@@ -30,7 +30,7 @@ const MiniCart: FC<Props> = ({ menuItems }) => {
   // Fetch cart items when the component mounts
   useEffect(() => {
     dispatch(fetchCartList()); // Dispatch fetchCartList to load cart items
-  }, [dispatch, cartItems]);
+  }, [dispatch]);
 
   const selectedLanguage = useSelector(
     (state: RootState) => state.language.selectedLanguage
