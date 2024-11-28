@@ -14,10 +14,15 @@ import Button from "../../button/Button";
 const Gift = () => {
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
   const dispatch = useDispatch<AppDispatch>();
-  const handleAddToCart = (product: Product) => {
-    dispatch(fetchCartList());
-    addToCart(product);
-  };
+ const handleAddToCart = async (product: Product) => {
+   try {
+     await addToCart(product); // Wait for the item to be added to the cart
+     dispatch(fetchCartList()); // Fetch the updated cart list from the server
+   } catch (error) {
+     console.error("Failed to add item to cart:", error);
+   }
+ };
+
   const handleImageError = (id: string) => {
     setImageError((prevState) => ({
       ...prevState,

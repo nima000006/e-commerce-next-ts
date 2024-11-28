@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
@@ -30,7 +31,6 @@ const Products = () => {
 
   const swiperRef = useRef<any>();
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
-  const [swiperInstance, setSwiperInstance] = useState<any>(null);
   const [isFirstSlide, setIsFirstSlide] = useState<boolean>(false);
   const [isLastSlide, setIsLastSlide] = useState<boolean>(false);
 
@@ -42,17 +42,20 @@ const Products = () => {
     }
   }, [status, dispatch]);
 
-  useEffect(() => {
-    if (swiperInstance) {
-      swiperInstance.update();
-    }
-  }, [selectedLanguage, swiperInstance]);
+  // Update Swiper navigation state on slide change
+  const handleSlideChange = (swiper: any) => {
+    setIsFirstSlide(swiper.isBeginning);
+    setIsLastSlide(swiper.isEnd);
+  };
 
-  useEffect(() => {
-    if (swiperInstance) {
-      handleSlideChange();
+  const handleAddToCart = async (product: Product) => {
+    try {
+      await addToCart(product); // Wait for the item to be added to the cart
+      dispatch(fetchCartList()); // Fetch the updated cart list from the server
+    } catch (error) {
+      console.error("Failed to add item to cart:", error);
     }
-  }, [swiperInstance]);
+  };
 
   const handleImageError = (id: string) => {
     setImageError((prevState) => ({
@@ -61,49 +64,9 @@ const Products = () => {
     }));
   };
 
-  const handleSlideChange = () => {
-    if (swiperInstance) {
-      setIsFirstSlide(swiperInstance.isBeginning);
-      setIsLastSlide(swiperInstance.isEnd);
-    }
-  };
-
-  const handleAddToCart = (product: Product) => {
-    dispatch(fetchCartList());
-    addToCart(product);
-  };
-
   const renderNavigationButtons = () => {
     const nextButtonDisabled = isLastSlide ? `${Style.disabled}` : "";
     const prevButtonDisabled = isFirstSlide ? `${Style.disabled}` : "";
-
-    if (selectedLanguage === "Fa") {
-      return (
-        <>
-          <button
-            className={`h-[40px] w-[40px] ${Style.next} ${Style.button_arrow} ${nextButtonDisabled}`}
-            onClick={() => swiperRef.current?.slideNext()}
-            disabled={isLastSlide}
-          >
-            <img
-              src="https://www.perfumerh.com/cdn/shop/t/16/assets/icon-arrow-right.svg?v=150928298113663093401724758221"
-              alt="Next"
-            />
-          </button>
-          <button
-            className={`h-[40px] w-[40px] ${Style.prev} ${Style.button_arrow} ${prevButtonDisabled}`}
-            onClick={() => swiperRef.current?.slidePrev()}
-            disabled={isFirstSlide}
-          >
-            <img
-              src="https://www.perfumerh.com/cdn/shop/t/16/assets/icon-arrow-right.svg?v=150928298113663093401724758221"
-              alt="Previous"
-              className="rotate-180"
-            />
-          </button>
-        </>
-      );
-    }
 
     return (
       <>
@@ -155,14 +118,9 @@ const Products = () => {
             key={selectedLanguage}
             dir={selectedLanguage === "Fa" ? "rtl" : "ltr"}
             modules={[Navigation, Pagination, Scrollbar, A11y]}
-            onBeforeInit={(swiper) => {
-              swiperRef.current = swiper;
-              setSwiperInstance(swiper);
-            }}
             spaceBetween={30}
-            slidesPerView={2.5} // Default for small screens
-            navigation={false}
-            pagination={false}
+            slidesPerView={2.5}
+            onSwiper={(swiper) => (swiperRef.current = swiper)}
             onSlideChange={handleSlideChange}
             breakpoints={{
               640: {
@@ -207,8 +165,8 @@ const Products = () => {
                     <div
                       className={`flex font-semibold text-brown-normal w-full items-center justify-center backdrop-blur-[10px] ${Style.quick_add}`}
                       onClick={(event) => {
-                        event.preventDefault(); // Prevent the link navigation
-                        handleAddToCart(item); // Execute Quick Add functionality
+                        event.preventDefault();
+                        handleAddToCart(item);
                       }}
                     >
                       {`${t("QUICKADD")}`}
