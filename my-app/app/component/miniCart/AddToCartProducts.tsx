@@ -18,6 +18,7 @@ const AddToCartProducts = () => {
   const t = useTranslation();
   const products = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch<AppDispatch>();
+
   // Using useMemo to optimize and avoid recalculating grouped products on each render
   const groupedProducts = useMemo(() => {
     return products.reduce<Record<number, Product & { count: number }>>(
@@ -40,33 +41,34 @@ const AddToCartProducts = () => {
       [id]: true,
     }));
   };
+
   const handleRemoveAll = async (id: number) => {
-    dispatch(fetchCartList());
     try {
       await removeAllFromCart(id); // Remove all instances from the cart
-      console.log(`All items with id ${id} removed successfully.`);
+      dispatch(fetchCartList()); // Re-fetch cart list
     } catch (error) {
       console.error("Failed to remove all items:", error);
     }
   };
+
   const handleRemove = async (id: number) => {
-    dispatch(fetchCartList());
     try {
-      await removeFromCart(id); // Remove all instances from the cart
-      console.log(`All items with id ${id} removed successfully.`);
+      await removeFromCart(id); // Remove the product from the cart
+      dispatch(fetchCartList()); // Re-fetch cart list
     } catch (error) {
-      console.error("Failed to remove all items:", error);
+      console.error("Failed to remove item:", error);
     }
   };
+
   const handleAdd = async (product: Product) => {
-    dispatch(fetchCartList());
     try {
-      await addToCart(product);
-      console.log(`All items with name ${product} removed successfully.`);
+      await addToCart(product); // Add the product to the cart
+      dispatch(fetchCartList()); // Re-fetch cart list
     } catch (error) {
-      console.error("Failed to remove all items:", error);
+      console.error("Failed to add item:", error);
     }
   };
+
   return (
     <div>
       {Object.values(groupedProducts).map((item) => (

@@ -5,15 +5,15 @@ import { AppDispatch, RootState } from "@/app/redux/store";
 import CloseIcon from "../closeIcon/CloseIcon";
 import { Product } from "@/app/models/productsModel";
 import { addToCart } from "../sections/products/Product.service";
-import { fetchCartList } from "@/app/redux/addToCartSlice";
+import { addItemToCart } from "@/app/redux/addToCartSlice"; // Import your action here
 
 const ProductRecommender = () => {
   const [imageError, setImageError] = useState<{ [key: string]: boolean }>({});
-
   const productsRecommender = useSelector(
     (state: RootState) => state.products.items
   );
   const dispatch = useDispatch<AppDispatch>();
+
   // Find all new products
   const newProducts = productsRecommender.filter((item) => item.new);
 
@@ -24,15 +24,20 @@ const ProductRecommender = () => {
   const displayedProducts = [...newProducts, ...additionalProducts].slice(0, 3);
 
   const handleAddToCart = (item: Product) => {
-     dispatch(fetchCartList());
+    // Dispatch an action to add the item to the Redux store directly
+    dispatch(addItemToCart(item));
+
+    // Call the addToCart service if necessary (you can keep it for external operations)
     addToCart(item);
   };
+
   const handleImageError = (id: string) => {
     setImageError((prevState) => ({
       ...prevState,
       [id]: true,
     }));
   };
+
   return (
     <div>
       {displayedProducts.map((item) => (

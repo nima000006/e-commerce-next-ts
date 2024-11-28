@@ -132,10 +132,10 @@ const Menu = () => {
 
       <div className="flex items-center">
         <Languages />
-        {largerThan1024 && (
-          <>
+        {largerThan768 && (
+          <span className="mx-3">
             <Search />
-          </>
+          </span>
         )}
         <MiniCart menuItems={menuItems} />
       </div>
