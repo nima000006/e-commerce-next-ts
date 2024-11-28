@@ -1,53 +1,29 @@
 import { useState, useEffect } from "react";
 
-type Breakpoints = {
-  sm: string | null;
-  md: string | null;
-  lg: string | null;
-  xl: string | null;
-};
-
-const breakpoints: Breakpoints = {
-  sm: "640px",
-  md: "768px",
-  lg: "1024px",
-  xl: "1280px",
-};
-
-type ScreenSize = keyof Breakpoints | null;
-
-export const useBreakpoint = (): ScreenSize => {
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<ScreenSize>(null);
+/**
+ * Custom hook to determine if the screen width is larger than the specified threshold.
+ * @param threshold - The minimum width (in pixels) to check against.
+ * @returns A boolean indicating if the screen width is larger than the threshold.
+ */
+export const useIsLargerThan = (threshold: number): boolean => {
+  const [isLarger, setIsLarger] = useState<boolean>(false);
 
   useEffect(() => {
-    const mediaQueries = Object.entries(breakpoints).map(([key, value]) => ({
-      key: key as keyof Breakpoints,
-      query: window.matchMedia(`(min-width: ${value})`),
-    }));
+    const query = window.matchMedia(`(min-width: ${threshold}px)`);
 
-    const updateBreakpoint = () => {
-      for (const { key, query } of mediaQueries) {
-        if (query.matches) {
-          setCurrentBreakpoint(key);
-        }
-      }
+    const updateIsLarger = () => {
+      setIsLarger(query.matches);
     };
 
-    // Attach listeners
-    mediaQueries.forEach(({ query }) =>
-      query.addEventListener("change", updateBreakpoint)
-    );
+    // Set initial state
+    updateIsLarger();
 
-    // Set initial breakpoint
-    updateBreakpoint();
+    // Attach the event listener
+    query.addEventListener("change", updateIsLarger);
 
-    // Cleanup listeners on unmount
-    return () => {
-      mediaQueries.forEach(({ query }) =>
-        query.removeEventListener("change", updateBreakpoint)
-      );
-    };
-  }, []);
+    // Cleanup listener on unmount
+    return () => query.removeEventListener("change", updateIsLarger);
+  }, [threshold]);
 
-  return currentBreakpoint;
+  return isLarger;
 };

@@ -7,17 +7,19 @@ import Languages from "../languages/Languages";
 import Search from "../search/Search";
 import { TranslationData } from "../languageProvider/LanguageProvider";
 import MiniCart from "../miniCart/MiniCart";
-import { useBreakpoint } from "@/app/tools/CheckBreakPoint";
 import HamburgerIcon from "../hamburgerIcon/HamburgerIcon";
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/redux/store";
 import CloseIcon from "../closeIcon/CloseIcon";
+import { useIsLargerThan } from "@/app/tools/CheckBreakPoint";
 
 const Menu = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const closeCart = () => setIsOpen(false);
   const menuItems = MenuItems();
-  const breakpoint = useBreakpoint();
+  const largerThan1250 = useIsLargerThan(1250);
+  const largerThan1024 = useIsLargerThan(1024);
+  const largerThan768 = useIsLargerThan(768);
   const toggleCart = () => setIsOpen(!isOpen);
   const selectedLanguage = useSelector(
     (state: RootState) => state.language.selectedLanguage
@@ -59,14 +61,14 @@ const Menu = () => {
       className={`${Style.container} relative flex items-center justify-between font-semibold h-[84px] px-[25px]`}
     >
       {/* Hamburger Icon for smaller breakpoints */}
-      {breakpoint && ["sm", "md", "lg"].includes(breakpoint) && (
+      {!largerThan1024 && (
         <>
           <div className="flex items-center justify-center">
             <button onClick={toggleCart}>
               <HamburgerIcon />
             </button>
 
-            {breakpoint && ["sm", "md"].includes(breakpoint) && <Search />}
+            {!largerThan768 && <Search />}
           </div>
           {/* Overlay */}
           {isOpen && (
@@ -110,7 +112,7 @@ const Menu = () => {
       <Logo />
 
       {/* Regular Menu for larger screens */}
-      {breakpoint === "xl" && (
+      {largerThan1250 && (
         <ul className="flex items-center justify-center h-[100%]">
           {menuItems.map((item: TranslationData) => (
             <li
@@ -130,7 +132,7 @@ const Menu = () => {
 
       <div className="flex items-center">
         <Languages />
-        {breakpoint && ["lg", "xl"].includes(breakpoint) && (
+        {largerThan1024 && (
           <>
             <Search />
           </>
