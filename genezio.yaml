@@ -1,0 +1,9 @@
+name: perfume
+nextjs:
+    packageManager: npm
+    path: ./my-app/
+    scripts:
+        deploy:
+            - npm install
+region: us-east-1
+yamlVersion: 2
